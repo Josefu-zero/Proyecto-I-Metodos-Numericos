@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from PIL import Image, ImageTk
 import os
+import ctypes
 from tkinter import ttk  # Para la tabla
 
 
@@ -32,13 +33,15 @@ def mostrar_menu():
 
     # Fondo con imagen
     try:
-        img = Image.open("fondo.jpg")  # Asegúrate de tener esta imagen
+    # Usar imagen de fondo desde la carpeta assets
+        img_path = os.path.join(script_dir, "assets", "fondo2.png")
+        img = Image.open(img_path)
         fondo = ImageTk.PhotoImage(img.resize((600, 500)))
         label_fondo = tk.Label(menu, image=fondo)
         label_fondo.place(x=0, y=0, relwidth=1, relheight=1)
         label_fondo.image = fondo
     except:
-        menu.configure(bg="#DDEEFF")
+        menu.configure(bg="#2F2F2F")
 
     def abrir_aplicacion():
         menu.destroy()
@@ -58,10 +61,8 @@ def mostrar_menu():
 
     tk.Button(menu, text="Información de la Aplicación", font=("Arial", 12), command=lambda: mostrar_mensaje("Información", "Aplicación interactiva que predice visualmente la clase de un punto en un plano bidimensional y muestra la frontera de decisión aprendida."), width=30).pack(pady=8)
 
-    tk.Button(menu, text="Créditos", font=("Arial", 12), command=lambda: mostrar_mensaje("Créditos", "Desarrollado por: Tu Nombre\nUniversidad XYZ - 2025"), width=30).pack(pady=8)
-
+    tk.Button(menu, text="Créditos", font=("Arial", 12), command=lambda: mostrar_mensaje("Créditos", "Desarrollado por: Dany, Kevin, Joseph \nEscuela Poliecnica Nacional - 2025"), width=30).pack(pady=8)
    
-    
     tk.Button(menu, text="Salir", command=menu.quit, font=("Arial", 11), bg="red", fg="white", width=15).pack(pady=10)
 
     menu.mainloop()
@@ -73,7 +74,7 @@ def mostrar_tabla_resultados():
     ventana_tabla = tk.Toplevel()
     ventana_tabla.title("Tabla de Resultados")
     ventana_tabla.geometry("500x400")
-    ventana_tabla.configure(bg="#F2F2F2")
+    ventana_tabla.configure(bg="#2F2F2F")
 
     tk.Label(ventana_tabla, text="Historial de Predicciones", font=("Arial", 14, "bold"), bg="#F2F2F2").pack(pady=10)
 
@@ -101,10 +102,23 @@ def lanzar_clasificador():
     root = tk.Tk()
     root.title("Clasificador con Modelo Keras")
     root.geometry("1000x600")
-    root.configure(bg="#F2F2F2")
+    root.configure(bg="#FFFFFF")
 
     # FRAME IZQUIERDO (SECCIÓN 2) - Entrada de datos y botones
-    frame_izquierda = tk.Frame(root, bg="#F2F2F2", padx=20, pady=20)
+    frame_izquierda = tk.Frame(root, bg="#404040", padx=10, pady=10)
+    # Imagen de fondo para el frame izquierdo
+    try:
+        bg_img_path = os.path.join(script_dir, "assets", "left_bg.png")
+        bg_img = Image.open(bg_img_path)
+        bg_img = bg_img.resize((300, 700))
+        frame_izquierda.config(width=300, height=700)
+        frame_izquierda.pack_propagate(False)
+        bg_photo = ImageTk.PhotoImage(bg_img)
+        bg_label = tk.Label(frame_izquierda, image=bg_photo)
+        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+        bg_label.image = bg_photo
+    except Exception:
+        frame_izquierda.configure(bg="#404040")
     frame_izquierda.pack(side="left", fill="y")
 
     tk.Label(frame_izquierda, text="Ingrese x₁:", font=("Arial", 12), bg="#F2F2F2").pack(pady=(5, 0))
@@ -170,7 +184,18 @@ def lanzar_clasificador():
     tk.Button(frame_izquierda, text="Volver al Menú", command=volver_menu, bg="gray", fg="white", font=("Arial", 11)).pack(pady=5)
 
     # FRAME DERECHO (SECCIÓN 1) - Gráfica
-    frame_derecha = tk.Frame(root, bg="#F2F2F2", padx=10, pady=10)
+    frame_derecha = tk.Frame(root, bg="#2A2A2A", padx=10, pady=10)
+    # Imagen de fondo para el frame derecho
+    try:
+        right_bg_img_path = os.path.join(script_dir, "assets", "right_bg.png")
+        right_bg_img = Image.open(right_bg_img_path)
+        right_bg_img = right_bg_img.resize((700, 600))
+        right_bg_photo = ImageTk.PhotoImage(right_bg_img)
+        right_bg_label = tk.Label(frame_derecha, image=right_bg_photo)
+        right_bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+        right_bg_label.image = right_bg_photo
+    except Exception:
+        frame_derecha.configure(bg="#2A2A2A")
     frame_derecha.pack(side="right", fill="both", expand=True)
 
     root.mainloop()
