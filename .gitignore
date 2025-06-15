@@ -1,0 +1,27 @@
+venv310/
+# Cache de Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+
+# Archivos de desarrollo
+*.egg-info/
+*.egg
+dist/
+build/
+*.mo
+
+# Jupyter/IDE
+.ipynb_checkpoints/
+.vscode/
+.idea/
+
+# Logs y databases
+*.log
+*.sqlite3
+*.db
+
+# Archivos de entorno
+.env
+*.env
