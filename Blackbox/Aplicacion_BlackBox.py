@@ -27,9 +27,19 @@ def predict_batch(model, x1_list, x2_list):
 
 # Ventana principal con menú
 def mostrar_menu():
+    
     menu = tk.Tk()
+
+    # Centrar la ventana en la pantalla
+    menu.update_idletasks()
     menu.title("Menú - Black Box")
-    menu.geometry("600x500")
+    ancho_ventana = 600
+    alto_ventana = 500
+    ancho_pantalla = menu.winfo_screenwidth()
+    alto_pantalla = menu.winfo_screenheight()
+    x = (ancho_pantalla // 2) - (ancho_ventana // 2)
+    y = (alto_pantalla // 2) - (alto_ventana // 2)
+    menu.geometry(f"{ancho_ventana}x{alto_ventana}+{x}+{y}")
 
     # Fondo con imagen
     try:
@@ -51,19 +61,19 @@ def mostrar_menu():
         messagebox.showinfo(titulo, texto)
     
     # Título del menú
-    tk.Label(menu, text="Menú Principal - Black Box", font=("Arial", 16, "bold"), bg="#DDEEFF", fg="#333").pack(pady=20)
+    tk.Label(menu, text="Menú Principal - Black Box", font=("Helvetica", 16, "bold"), bg="#DDEEFF", fg="#333").pack(pady=20)
 
 
     # Botones del menú principal
-    tk.Button(menu, text="Iniciar Aplicación", font=("Arial", 12, "bold"), bg="#007ACC", fg="white", command=abrir_aplicacion, width=30).pack(pady=12)
+    tk.Button(menu, text="Iniciar Aplicación", font=("Helvetica", 12, "bold"), bg="#007ACC", fg="white", command=abrir_aplicacion, width=30).pack(pady=12)
 
-    tk.Button(menu, text="¿Qué es Black Box?", font=("Arial", 12), command=lambda: mostrar_mensaje("¿Qué es Black Box?", "Black Box es un modelo entrenado que clasifica puntos en 2D (x₁, x₂) en clases binarias usando una red neuronal."), width=30).pack(pady=8)
+    tk.Button(menu, text="¿Qué es Black Box?", font=("Helvetica", 12), command=lambda: mostrar_mensaje("¿Qué es Black Box?", "Black Box es un modelo entrenado que clasifica puntos en 2D (x₁, x₂) en clases binarias usando una red neuronal."), width=30).pack(pady=8)
 
-    tk.Button(menu, text="Información de la Aplicación", font=("Arial", 12), command=lambda: mostrar_mensaje("Información", "Aplicación interactiva que predice visualmente la clase de un punto en un plano bidimensional y muestra la frontera de decisión aprendida."), width=30).pack(pady=8)
+    tk.Button(menu, text="Información de la Aplicación", font=("Helvetica", 12), command=lambda: mostrar_mensaje("Información", "Aplicación interactiva que predice visualmente la clase de un punto en un plano bidimensional y muestra la frontera de decisión aprendida."), width=30).pack(pady=8)
 
-    tk.Button(menu, text="Créditos", font=("Arial", 12), command=lambda: mostrar_mensaje("Créditos", "Desarrollado por: Dany, Kevin, Joseph \nEscuela Poliecnica Nacional - 2025"), width=30).pack(pady=8)
+    tk.Button(menu, text="Créditos", font=("Helvetica", 12), command=lambda: mostrar_mensaje("Créditos", "Desarrollado por: Dany, Kevin, Joseph \nEscuela Poliecnica Nacional - 2025"), width=30).pack(pady=8)
    
-    tk.Button(menu, text="Salir", command=menu.quit, font=("Arial", 11), bg="red", fg="white", width=15).pack(pady=10)
+    tk.Button(menu, text="Salir", command=menu.quit, font=("Helvetica", 11), bg="red", fg="white", width=15).pack(pady=10)
 
     menu.mainloop()
 # Lista global para almacenar el historial
@@ -75,8 +85,17 @@ def mostrar_tabla_resultados():
     ventana_tabla.title("Tabla de Resultados")
     ventana_tabla.geometry("500x400")
     ventana_tabla.configure(bg="#2F2F2F")
+    # Centrar la ventana en la pantalla
+    ventana_tabla.update_idletasks()
+    ancho_ventana = 500
+    alto_ventana = 400
+    ancho_pantalla = ventana_tabla.winfo_screenwidth()
+    alto_pantalla = ventana_tabla.winfo_screenheight()
+    x = (ancho_pantalla // 2) - (ancho_ventana // 2)
+    y = (alto_pantalla // 2) - (alto_ventana // 2)
+    ventana_tabla.geometry(f"{ancho_ventana}x{alto_ventana}+{x}+{y}")
 
-    tk.Label(ventana_tabla, text="Historial de Predicciones", font=("Arial", 14, "bold"), bg="#F2F2F2").pack(pady=10)
+    tk.Label(ventana_tabla, text="Historial de Predicciones", font=("Helvetica", 14, "bold"), bg="#F2F2F2").pack(pady=10)
 
     tabla = ttk.Treeview(ventana_tabla, columns=("x1", "x2", "clase", "prob"), show="headings")
     tabla.heading("x1", text="x₁")
@@ -95,15 +114,22 @@ def mostrar_tabla_resultados():
         "en 2D en dos clases (0 o 1), dependiendo de su ubicación relativa en el plano."
     )
 
-    tk.Label(ventana_tabla, text=explicacion, bg="#F2F2F2", fg="#444", font=("Arial", 10), justify="left").pack(padx=10, pady=10)
+    tk.Label(ventana_tabla, text=explicacion, bg="#F2F2F2", fg="#444", font=("Helvetica", 10), justify="left").pack(padx=10, pady=10)
 
 # VENTANA PRINCIPAL
 def lanzar_clasificador():
     root = tk.Tk()
     root.title("Clasificador con Modelo Keras")
-    root.geometry("1000x600")
     root.configure(bg="#FFFFFF")
-
+    # Centrar la ventana en la pantalla
+    root.update_idletasks()
+    ancho_ventana = 1000
+    alto_ventana = 600
+    ancho_pantalla = root.winfo_screenwidth()
+    alto_pantalla = root.winfo_screenheight()
+    x = (ancho_pantalla // 2) - (ancho_ventana // 2)
+    y = (alto_pantalla // 2) - (alto_ventana // 2)
+    root.geometry(f"{ancho_ventana}x{alto_ventana}+{x}+{y}")
     # FRAME IZQUIERDO (SECCIÓN 2) - Entrada de datos y botones
     frame_izquierda = tk.Frame(root, bg="#404040", padx=10, pady=10)
     # Imagen de fondo para el frame izquierdo
@@ -121,15 +147,15 @@ def lanzar_clasificador():
         frame_izquierda.configure(bg="#404040")
     frame_izquierda.pack(side="left", fill="y")
 
-    tk.Label(frame_izquierda, text="Ingrese x₁:", font=("Arial", 12), bg="#F2F2F2").pack(pady=(5, 0))
-    entry_x1 = tk.Entry(frame_izquierda, font=("Arial", 12))
+    tk.Label(frame_izquierda, text="Ingrese x₁:", font=("Helvetica", 12), bg="#F2F2F2").pack(pady=(5, 0))
+    entry_x1 = tk.Entry(frame_izquierda, font=("Helvetica", 12))
     entry_x1.pack()
 
-    tk.Label(frame_izquierda, text="Ingrese x₂:", font=("Arial", 12), bg="#F2F2F2").pack(pady=(10, 0))
-    entry_x2 = tk.Entry(frame_izquierda, font=("Arial", 12))
+    tk.Label(frame_izquierda, text="Ingrese x₂:", font=("Helvetica", 12), bg="#F2F2F2").pack(pady=(10, 0))
+    entry_x2 = tk.Entry(frame_izquierda, font=("Helvetica", 12))
     entry_x2.pack()
 
-    label_resultado = tk.Label(frame_izquierda, text="Predicción del modelo:", font=("Arial", 12, "bold"), bg="#F2F2F2")
+    label_resultado = tk.Label(frame_izquierda, text="Predicción del modelo:", font=("Helvetica", 12, "bold"), bg="#F2F2F2")
     label_resultado.pack(pady=10)
 
     def predecir():
@@ -178,10 +204,10 @@ def lanzar_clasificador():
         root.destroy()
         mostrar_menu()
 
-    tk.Button(frame_izquierda, text="Predecir y Graficar", command=predecir, bg="#007ACC", fg="white", font=("Arial", 12)).pack(pady=10)
-    tk.Button(frame_izquierda, text="Limpiar Entradas", command=limpiar, bg="orange", font=("Arial", 11)).pack(pady=5)
-    tk.Button(frame_izquierda, text="Ver Tabla de Resultados", command=mostrar_tabla_resultados, bg="green", fg="white", font=("Arial", 11)).pack(pady=5)
-    tk.Button(frame_izquierda, text="Volver al Menú", command=volver_menu, bg="gray", fg="white", font=("Arial", 11)).pack(pady=5)
+    tk.Button(frame_izquierda, text="Predecir y Graficar", command=predecir, bg="#007ACC", fg="white", font=("Helvetica", 12)).pack(pady=10)
+    tk.Button(frame_izquierda, text="Limpiar Entradas", command=limpiar, bg="orange", font=("Helvetica", 11)).pack(pady=5)
+    tk.Button(frame_izquierda, text="Ver Tabla de Resultados", command=mostrar_tabla_resultados, bg="green", fg="white", font=("Helvetica", 11)).pack(pady=5)
+    tk.Button(frame_izquierda, text="Volver al Menú", command=volver_menu, bg="gray", fg="white", font=("Helvetica", 11)).pack(pady=5)
 
     # FRAME DERECHO (SECCIÓN 1) - Gráfica
     frame_derecha = tk.Frame(root, bg="#2A2A2A", padx=10, pady=10)
